@@ -55,3 +55,5 @@ SQLite WAL is suitable for this single-user local application. Use a persistent 
 ## Deliberate limits
 
 External-agent registration/upload, distributed concurrency, production provider calls, probabilistic confidence claims and automatic production patching are not implemented. The adapter interface is the extension point; new untrusted adapters must use an isolated backend.
+
+The optional test-program planner produces closed ghost-js-v1 source. Host AST validation canonicalizes capability calls; only the CreateOS harness imports generated code. Both remote modes share bounded lifecycle transport, policy verification and cleanup. See TEST_PROGRAMS.md.

@@ -58,7 +58,7 @@ Sources:
 
 Detailed rules permitting prior-developed code were not available from the reviewed official material. Confirm with organizers before finalizing a submission. This repository's dates truthfully identify pre-event preparation.
 
-Current MVP runs reviewed fixture code; its LLM planner proposes typed data, not unrestricted generated code. Therefore do not claim it already satisfies the event's autonomous code-writing objective. A future constrained test-program compiler or sandbox-only agent-generated test implementation could address that after rules clarification. Do not add unsafe host execution merely to match the event theme.
+The optional planner now emits validated executable ghost-js-v1 source, with a CreateOS-only runtime. See TEST_PROGRAMS.md. No live model or sandbox execution has been verified; qualification as agent-generated executable code and prior-code eligibility remain organizer decisions. Stripe CLI was not available in the inspected environment; no provisioning was attempted.
 
 ## Submission blockers
 

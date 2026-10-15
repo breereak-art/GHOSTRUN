@@ -31,3 +31,5 @@ npm run replay -- artifact.json --hardened
 The first command exits nonzero unless the recorded violations reproduce. Hardened replay exits nonzero unless the complete valid experiment passes. Requested CreateOS replay never silently switches to local. Use the same source version/dependency lockfile to reproduce. No uploaded regression content is executable code; it must pass the world schema and closed target registry.
 
 Exports include synthetic state and untrusted simulated strings verbatim as data. Do not import real credentials or financial records into these fixtures.
+
+Program evidence additionally retains original/canonical source hashes, planner provenance, validated worlds, remote observations and independent run verdicts. CLI reports are stored under data/programs; live signature reports under data/live-validation. These artifacts are separate from dashboard campaigns. A blocked report has zero experiments and is not execution evidence.

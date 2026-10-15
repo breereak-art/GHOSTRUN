@@ -74,3 +74,5 @@ One Next.js application and API, modular TypeScript engine packages, one SQLite 
 ## Hackathon status
 
 Built from an empty GitHub repository; no earlier Build 01 source was recovered. The event listing describes starting from an empty directory. Confirm preparation/prior-code eligibility with the organizers before submitting this work. Live CreateOS access, Stripe Projects provisioning and hosted deployment are not claimed.
+
+Sandbox-only generated test programs and live validation: see [TEST_PROGRAMS.md](TEST_PROGRAMS.md).

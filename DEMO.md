@@ -35,3 +35,5 @@
 A local demonstration is not a sandbox demonstration. Before claiming live CreateOS, configure the token, build the runner and run a campaign through CreateOS. Keep its actual backend metadata, artifacts and cleanup results. Stripe Projects and submission prerequisites are documented separately.
 
 The targets are disclosed seeded-defect fixtures. ELSEWHERE discovers executable conditions within its supported operator library; it is not an unconstrained autonomous research system.
+
+For live signature validation run npm run bundle:runner then npm run validate:createos after configuring .env.local. See TEST_PROGRAMS.md. The command must report verified before claiming live execution; blocked is not a successful demonstration.

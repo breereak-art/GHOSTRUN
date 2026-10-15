@@ -13,9 +13,12 @@
     "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
     "test:e2e": "playwright test",
-    "bundle:runner": "esbuild scripts/sandbox-entry.ts --bundle --platform=node --format=esm --outfile=dist/sandbox-runner.mjs",
+    "bundle:runner": "esbuild scripts/sandbox-entry.ts --bundle --platform=node --format=esm --outfile=dist/sandbox-runner.mjs && esbuild scripts/program-sandbox-entry.ts --bundle --platform=node --format=esm --external:file:///workspace/program.mjs --outfile=dist/program-runner.mjs",
     "demo": "tsx scripts/demo.ts",
-    "replay": "tsx scripts/replay.ts"
+    "replay": "tsx scripts/replay.ts",
+    "validate:createos": "tsx scripts/validate-createos.ts",
+    "program:plan": "tsx scripts/test-program.ts plan",
+    "program:run": "tsx scripts/test-program.ts run"
   },
   "dependencies": {
     "lucide-react": "^0.468.0",
@@ -36,4 +39,3 @@
     "vitest": "^3.2.0"
   }
 }
-

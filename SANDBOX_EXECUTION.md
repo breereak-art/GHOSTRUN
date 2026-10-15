@@ -14,9 +14,9 @@ The adapter uses the official REST API researched on 2026-10-15:
 - [Execution and files](https://createos.sh/docs/Sandbox/REST-API/Execution-And-Files/)
 - [Quickstart](https://createos.sh/docs/Sandbox/Quickstart/)
 
-The server authenticates through X-Api-Key to the fixed official sandbox API host. It provisions a fresh 1 vCPU / 1 GB devbox, disables ingress and restricts egress to loopback. An empty egress list would allow all traffic, so the adapter does not use one.
+The server authenticates through X-Api-Key to the fixed official sandbox API host. It provisions a fresh 1 vCPU / 1 GB devbox, disables ingress and restricts egress to 127.0.0.1:9 and reads back the policy. An empty egress list would allow all traffic, so the adapter does not use one.
 
-Build `dist/sandbox-runner.mjs` with `npm run bundle:runner`. The adapter uploads that reviewed bundle and validated world, invokes Node with fixed arguments, downloads JSON output, and deletes the VM in a finally path. It polls to verify destruction. Deletion failure or uncertain cleanup is an infrastructure error containing the sandbox ID for operator recovery.
+Build `dist/sandbox-runner.mjs` with `npm run bundle:runner`. The adapter uploads that reviewed bundle and validated world, invokes Node through a ten-second timeout command with a 128 MiB heap limit, downloads JSON output, and deletes the VM in a finally path. It polls to verify destruction. Deletion failure or uncertain cleanup is an infrastructure error containing the sandbox ID for operator recovery.
 
 No token is sent inside the VM. Network and memory controls depend on the provider. The command request has a bounded client deadline; cleanup destroys the sandbox after timeout. A client timeout is not itself proof that the remote process stopped. The adapter verifies cleanup before returning a completed result.
 
@@ -44,3 +44,5 @@ The verifier returns per-property results. Overall verdict can be inconclusive e
 
 The hardened fixture also passes an authorization deadline to the mock bank. The bank checks it at commit time, preventing a delayed request from outliving approval. This optional conditional-write semantic is part of the documented synthetic tool contract.
 Cloud evidence includes bounded stdout/stderr, exit code, bundle hash and cleanup metadata when available.
+
+Generated test programs use the same lifecycle transport and a separate reviewed harness. See [TEST_PROGRAMS.md](TEST_PROGRAMS.md) for the grammar, limits, CLI and unverified live assumptions.

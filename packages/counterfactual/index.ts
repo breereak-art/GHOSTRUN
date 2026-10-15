@@ -6,9 +6,7 @@ import type { Observation, Run, World } from "../core/index";
 
 export interface Backend {
   name: Run["backend"];
-  execute(
-    world: World,
-  ): Promise<{
+  execute(world: World): Promise<{
     observation: Observation;
     environment: Record<string, unknown>;
   }>;

@@ -28,7 +28,14 @@ it("uses documented REST operations, retrieves artifact and confirms destruction
       destroyed = true;
       data = { status: "destroying" };
     } else if (url.endsWith("/sb-test"))
-      data = { status: destroyed ? "destroyed" : "running" };
+      data = {
+        status: destroyed ? "destroyed" : "running",
+        shape: "s-1vcpu-1gb",
+        vcpu: 1,
+        mem_mib: 1024,
+        ingress_enabled: false,
+      };
+    else if (url.endsWith("/egress")) data = { egress: ["127.0.0.1:9"] };
     else if (url.includes("/exec"))
       data = { result: { exit_code: 0, stdout: "", stderr: "" } };
     else if (url.includes("/files") && method === "GET")
@@ -48,10 +55,10 @@ it("uses documented REST operations, retrieves artifact and confirms destruction
   expect(r.environment.cleanup).toBe("destroyed");
   expect(calls.filter((c) => c.method === "PUT")).toHaveLength(2);
   expect(calls.some((c) => c.method === "DELETE")).toBe(true);
-  expect(JSON.parse(calls[0].body!).egress).toEqual(["127.0.0.1"]);
+  expect(JSON.parse(calls[0].body!).egress).toEqual(["127.0.0.1:9"]);
   expect(
     JSON.parse(calls.find((c) => c.url.endsWith("/exec"))!.body!).cmd,
-  ).toBe("node");
+  ).toBe("timeout");
 });
 it("cleans up after a failed command and reports infrastructure error", async () => {
   let destroyed = false;
@@ -63,14 +70,25 @@ it("cleans up after a failed command and reports infrastructure error", async ()
       data = { status: "destroying" };
     } else if (url.endsWith("/sandboxes")) data = { id: "sb-test" };
     else if (url.endsWith("/sb-test"))
-      data = { status: destroyed ? "destroyed" : "running" };
+      data = {
+        status: destroyed ? "destroyed" : "running",
+        shape: "s-1vcpu-1gb",
+        vcpu: 1,
+        mem_mib: 1024,
+        ingress_enabled: false,
+      };
+    else if (url.endsWith("/egress")) data = { egress: ["127.0.0.1:9"] };
     else if (url.endsWith("/exec"))
       data = { result: { exit_code: 1, stderr: "failure" } };
     return Response.json({ status: "success", data });
   }) as typeof fetch;
   const r = await runExperiment(
     baseline(),
-    createOSBackend({ apiKey: "test", fetcher, bundle: async () => "" }),
+    createOSBackend({
+      apiKey: "test",
+      fetcher,
+      bundle: async () => "// fixture",
+    }),
   );
   expect(destroyed).toBe(true);
   expect(r.verdict).toBe("INFRA_ERROR");
@@ -89,7 +107,11 @@ it("does not claim successful cleanup after provider deletion failure", async ()
   }) as typeof fetch;
   const r = await runExperiment(
     baseline(),
-    createOSBackend({ apiKey: "test", fetcher, bundle: async () => "" }),
+    createOSBackend({
+      apiKey: "test",
+      fetcher,
+      bundle: async () => "// fixture",
+    }),
   );
   expect(r.verdict).toBe("INFRA_ERROR");
   expect(r.error).toContain("CLEANUP_UNCONFIRMED");
