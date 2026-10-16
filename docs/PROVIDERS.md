@@ -1,5 +1,7 @@
 # Providers and hackathon readiness
 
+> Update 2026-10-16: the reviewed fixture runner completed four real CreateOS signature runs with matching replays and verified destruction. See [live validation](LIVE_VALIDATION.md). Earlier missing-credential notes below describe the prior cycle; live AI-generated programs, Stripe provisioning and event eligibility remain unverified.
+
 Research date: 2026-10-15.
 
 ## CreateOS

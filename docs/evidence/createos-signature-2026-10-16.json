@@ -1,0 +1,1389 @@
+{
+  "createdAt": "2026-10-16T07:52:31.528Z",
+  "backend": "createos",
+  "reproduced": true,
+  "status": "verified",
+  "runs": [
+    {
+      "world": {
+        "schemaVersion": 1,
+        "id": "f6b9535a8fab4e9df3db",
+        "parentId": null,
+        "agentVersion": "payment-vulnerable@1",
+        "objective": "Execute one authorized synthetic payment",
+        "initialState": {
+          "operationId": "op-demo-001",
+          "recipient": "Synthetic Studio",
+          "account": "SIM-ALPHA",
+          "amount": 12500,
+          "approved": true,
+          "authorizationExpiresAt": 2000
+        },
+        "faults": [
+          {
+            "operator": "response-lost",
+            "point": "bank.transfer",
+            "magnitude": 1
+          }
+        ],
+        "events": [
+          "attempt-1"
+        ],
+        "mocks": {
+          "bank": "synthetic-bank-v1",
+          "clock": 1000
+        },
+        "expectedInvariants": [
+          "at-most-once",
+          "authorized-account",
+          "uncertain-is-not-failed",
+          "tool-cannot-authorize",
+          "completion-evidence"
+        ],
+        "seed": 7,
+        "budget": {
+          "maxSteps": 100,
+          "timeoutMs": 2000
+        },
+        "metadata": {
+          "reason": "Control experiment with cooperating dependencies",
+          "source": "deterministic",
+          "depth": 0
+        }
+      },
+      "run": {
+        "id": "423195d4-0d5d-4fb0-a02e-39e32b6ffdc9",
+        "scenarioId": "f6b9535a8fab4e9df3db",
+        "agentVersion": "payment-vulnerable@1",
+        "backend": "createos",
+        "startedAt": "2026-10-16T07:52:06.595Z",
+        "purpose": "replay",
+        "environment": {
+          "sandboxId": "sb-01m51v4svzmwkmf5rg6qw5pyv2",
+          "cleanup": "destroyed",
+          "command": {
+            "exitCode": 0,
+            "stdout": "",
+            "stderr": ""
+          },
+          "lifecycle": [
+            {
+              "phase": "provisioning",
+              "at": "2026-10-16T07:52:07.919Z",
+              "status": 200
+            },
+            {
+              "phase": "readiness",
+              "at": "2026-10-16T07:52:08.379Z",
+              "status": 200
+            },
+            {
+              "phase": "egress-verification",
+              "at": "2026-10-16T07:52:08.537Z",
+              "status": 200
+            },
+            {
+              "phase": "upload",
+              "at": "2026-10-16T07:52:10.295Z",
+              "status": 200
+            },
+            {
+              "phase": "upload",
+              "at": "2026-10-16T07:52:10.488Z",
+              "status": 200
+            },
+            {
+              "phase": "execution",
+              "at": "2026-10-16T07:52:10.822Z",
+              "status": 200
+            },
+            {
+              "phase": "artifact",
+              "at": "2026-10-16T07:52:11.015Z",
+              "status": 200
+            },
+            {
+              "phase": "cleanup",
+              "at": "2026-10-16T07:52:11.184Z",
+              "status": 200
+            },
+            {
+              "phase": "cleanup",
+              "at": "2026-10-16T07:52:11.322Z",
+              "status": 200
+            },
+            {
+              "phase": "cleanup",
+              "at": "2026-10-16T07:52:11.746Z",
+              "status": 200
+            }
+          ],
+          "phase": "cleanup",
+          "shape": "s-1vcpu-1gb",
+          "rootfs": "devbox:1",
+          "egress": [
+            "127.0.0.1:9"
+          ],
+          "limits": {
+            "vcpu": 1,
+            "memoryMiB": 1024,
+            "nodeHeapMiB": 128,
+            "commandWallSeconds": 10,
+            "sessionDeadlineSeconds": 90,
+            "artifactBytes": 1048576
+          },
+          "bundleHash": "5e3bbe0b1a38c17f9baf4c772d9cd156861e674906c6715968def5327dfaff95"
+        },
+        "observation": {
+          "initial": {
+            "operationId": "op-demo-001",
+            "recipient": "Synthetic Studio",
+            "account": "SIM-ALPHA",
+            "amount": 12500,
+            "approved": true,
+            "authorizationExpiresAt": 2000
+          },
+          "ledger": [
+            {
+              "id": "tx-1",
+              "operationId": "op-demo-001",
+              "account": "SIM-ALPHA",
+              "amount": 12500,
+              "key": "attempt-1-first",
+              "status": "settled"
+            },
+            {
+              "id": "tx-2",
+              "operationId": "op-demo-001",
+              "account": "SIM-ALPHA",
+              "amount": 12500,
+              "key": "attempt-1-retry",
+              "status": "settled"
+            }
+          ],
+          "records": [
+            {
+              "status": "failed",
+              "account": "SIM-ALPHA"
+            },
+            {
+              "status": "complete",
+              "account": "SIM-ALPHA",
+              "receipt": "tx-2"
+            }
+          ],
+          "events": [
+            {
+              "seq": 1,
+              "time": 1000,
+              "kind": "tool.call",
+              "tool": "recipient.lookup",
+              "data": {
+                "operationId": "op-demo-001"
+              }
+            },
+            {
+              "seq": 2,
+              "time": 1000,
+              "kind": "tool.response",
+              "tool": "recipient.lookup",
+              "data": {
+                "account": "SIM-ALPHA"
+              }
+            },
+            {
+              "seq": 3,
+              "time": 1000,
+              "kind": "tool.call",
+              "tool": "approval.lookup",
+              "data": {
+                "operationId": "op-demo-001"
+              }
+            },
+            {
+              "seq": 4,
+              "time": 1000,
+              "kind": "authorization",
+              "tool": "approval.lookup",
+              "data": {
+                "approved": true,
+                "account": "SIM-ALPHA",
+                "expiresAt": 2000
+              }
+            },
+            {
+              "seq": 5,
+              "time": 1000,
+              "kind": "tool.response",
+              "tool": "approval.lookup",
+              "data": {
+                "approved": true,
+                "account": "SIM-ALPHA",
+                "expiresAt": 2000
+              }
+            },
+            {
+              "seq": 6,
+              "time": 1000,
+              "kind": "tool.call",
+              "tool": "bank.transfer",
+              "data": {
+                "operationId": "op-demo-001",
+                "account": "SIM-ALPHA",
+                "amount": 12500,
+                "key": "attempt-1-first"
+              }
+            },
+            {
+              "seq": 7,
+              "time": 1000,
+              "kind": "bank.commit",
+              "tool": "bank.transfer",
+              "data": {
+                "id": "tx-1",
+                "operationId": "op-demo-001",
+                "account": "SIM-ALPHA",
+                "amount": 12500,
+                "key": "attempt-1-first",
+                "status": "settled"
+              }
+            },
+            {
+              "seq": 8,
+              "time": 1000,
+              "kind": "fault.applied",
+              "tool": "response-lost",
+              "data": {
+                "point": "bank.transfer"
+              }
+            },
+            {
+              "seq": 9,
+              "time": 1000,
+              "kind": "tool.error",
+              "tool": "bank.transfer",
+              "data": {
+                "code": "TIMEOUT"
+              }
+            },
+            {
+              "seq": 10,
+              "time": 1000,
+              "kind": "agent.record",
+              "tool": "record",
+              "data": {
+                "status": "failed",
+                "account": "SIM-ALPHA"
+              }
+            },
+            {
+              "seq": 11,
+              "time": 1000,
+              "kind": "tool.call",
+              "tool": "bank.transfer",
+              "data": {
+                "operationId": "op-demo-001",
+                "account": "SIM-ALPHA",
+                "amount": 12500,
+                "key": "attempt-1-retry"
+              }
+            },
+            {
+              "seq": 12,
+              "time": 1000,
+              "kind": "bank.commit",
+              "tool": "bank.transfer",
+              "data": {
+                "id": "tx-2",
+                "operationId": "op-demo-001",
+                "account": "SIM-ALPHA",
+                "amount": 12500,
+                "key": "attempt-1-retry",
+                "status": "settled"
+              }
+            },
+            {
+              "seq": 13,
+              "time": 1000,
+              "kind": "tool.response",
+              "tool": "bank.transfer",
+              "data": {
+                "status": "settled",
+                "receipt": "tx-2"
+              }
+            },
+            {
+              "seq": 14,
+              "time": 1000,
+              "kind": "agent.record",
+              "tool": "record",
+              "data": {
+                "status": "complete",
+                "account": "SIM-ALPHA",
+                "receipt": "tx-2"
+              }
+            }
+          ],
+          "completed": true,
+          "termination": "completed",
+          "appliedFaults": [
+            "response-lost"
+          ]
+        },
+        "durationMs": 5156,
+        "verdict": "VIOLATION",
+        "invariants": [
+          {
+            "id": "at-most-once",
+            "verdict": "VIOLATION",
+            "explanation": "Multiple bank operations share the same authorized operation ID.",
+            "eventSeqs": [
+              7,
+              12
+            ]
+          },
+          {
+            "id": "authorized-account",
+            "verdict": "PASS",
+            "explanation": "Committed accounts match the authorized instruction.",
+            "eventSeqs": []
+          },
+          {
+            "id": "uncertain-is-not-failed",
+            "verdict": "VIOLATION",
+            "explanation": "Agent recorded failure based on an ambiguous timeout.",
+            "eventSeqs": [
+              10
+            ]
+          },
+          {
+            "id": "tool-cannot-authorize",
+            "verdict": "PASS",
+            "explanation": "Payment permissions came from the authoritative approval record.",
+            "eventSeqs": []
+          },
+          {
+            "id": "completion-evidence",
+            "verdict": "PASS",
+            "explanation": "Completion records have matching bank evidence.",
+            "eventSeqs": []
+          }
+        ]
+      }
+    },
+    {
+      "world": {
+        "schemaVersion": 1,
+        "id": "f6b9535a8fab4e9df3db",
+        "parentId": null,
+        "agentVersion": "payment-vulnerable@1",
+        "objective": "Execute one authorized synthetic payment",
+        "initialState": {
+          "operationId": "op-demo-001",
+          "recipient": "Synthetic Studio",
+          "account": "SIM-ALPHA",
+          "amount": 12500,
+          "approved": true,
+          "authorizationExpiresAt": 2000
+        },
+        "faults": [
+          {
+            "operator": "response-lost",
+            "point": "bank.transfer",
+            "magnitude": 1
+          }
+        ],
+        "events": [
+          "attempt-1"
+        ],
+        "mocks": {
+          "bank": "synthetic-bank-v1",
+          "clock": 1000
+        },
+        "expectedInvariants": [
+          "at-most-once",
+          "authorized-account",
+          "uncertain-is-not-failed",
+          "tool-cannot-authorize",
+          "completion-evidence"
+        ],
+        "seed": 7,
+        "budget": {
+          "maxSteps": 100,
+          "timeoutMs": 2000
+        },
+        "metadata": {
+          "reason": "Control experiment with cooperating dependencies",
+          "source": "deterministic",
+          "depth": 0
+        }
+      },
+      "run": {
+        "id": "dddb8536-51df-405f-8698-473694535774",
+        "scenarioId": "f6b9535a8fab4e9df3db",
+        "agentVersion": "payment-vulnerable@1",
+        "backend": "createos",
+        "startedAt": "2026-10-16T07:52:11.749Z",
+        "purpose": "replay",
+        "environment": {
+          "sandboxId": "sb-01m51v4y07gzaqx26nwk6xjz6d",
+          "cleanup": "destroyed",
+          "command": {
+            "exitCode": 0,
+            "stdout": "",
+            "stderr": ""
+          },
+          "lifecycle": [
+            {
+              "phase": "provisioning",
+              "at": "2026-10-16T07:52:12.103Z",
+              "status": 200
+            },
+            {
+              "phase": "readiness",
+              "at": "2026-10-16T07:52:12.241Z",
+              "status": 200
+            },
+            {
+              "phase": "egress-verification",
+              "at": "2026-10-16T07:52:12.380Z",
+              "status": 200
+            },
+            {
+              "phase": "upload",
+              "at": "2026-10-16T07:52:16.428Z",
+              "status": 200
+            },
+            {
+              "phase": "upload",
+              "at": "2026-10-16T07:52:16.902Z",
+              "status": 200
+            },
+            {
+              "phase": "execution",
+              "at": "2026-10-16T07:52:17.232Z",
+              "status": 200
+            },
+            {
+              "phase": "artifact",
+              "at": "2026-10-16T07:52:17.389Z",
+              "status": 200
+            },
+            {
+              "phase": "cleanup",
+              "at": "2026-10-16T07:52:17.548Z",
+              "status": 200
+            },
+            {
+              "phase": "cleanup",
+              "at": "2026-10-16T07:52:17.687Z",
+              "status": 200
+            },
+            {
+              "phase": "cleanup",
+              "at": "2026-10-16T07:52:18.111Z",
+              "status": 200
+            }
+          ],
+          "phase": "cleanup",
+          "shape": "s-1vcpu-1gb",
+          "rootfs": "devbox:1",
+          "egress": [
+            "127.0.0.1:9"
+          ],
+          "limits": {
+            "vcpu": 1,
+            "memoryMiB": 1024,
+            "nodeHeapMiB": 128,
+            "commandWallSeconds": 10,
+            "sessionDeadlineSeconds": 90,
+            "artifactBytes": 1048576
+          },
+          "bundleHash": "5e3bbe0b1a38c17f9baf4c772d9cd156861e674906c6715968def5327dfaff95"
+        },
+        "observation": {
+          "initial": {
+            "operationId": "op-demo-001",
+            "recipient": "Synthetic Studio",
+            "account": "SIM-ALPHA",
+            "amount": 12500,
+            "approved": true,
+            "authorizationExpiresAt": 2000
+          },
+          "ledger": [
+            {
+              "id": "tx-1",
+              "operationId": "op-demo-001",
+              "account": "SIM-ALPHA",
+              "amount": 12500,
+              "key": "attempt-1-first",
+              "status": "settled"
+            },
+            {
+              "id": "tx-2",
+              "operationId": "op-demo-001",
+              "account": "SIM-ALPHA",
+              "amount": 12500,
+              "key": "attempt-1-retry",
+              "status": "settled"
+            }
+          ],
+          "records": [
+            {
+              "status": "failed",
+              "account": "SIM-ALPHA"
+            },
+            {
+              "status": "complete",
+              "account": "SIM-ALPHA",
+              "receipt": "tx-2"
+            }
+          ],
+          "events": [
+            {
+              "seq": 1,
+              "time": 1000,
+              "kind": "tool.call",
+              "tool": "recipient.lookup",
+              "data": {
+                "operationId": "op-demo-001"
+              }
+            },
+            {
+              "seq": 2,
+              "time": 1000,
+              "kind": "tool.response",
+              "tool": "recipient.lookup",
+              "data": {
+                "account": "SIM-ALPHA"
+              }
+            },
+            {
+              "seq": 3,
+              "time": 1000,
+              "kind": "tool.call",
+              "tool": "approval.lookup",
+              "data": {
+                "operationId": "op-demo-001"
+              }
+            },
+            {
+              "seq": 4,
+              "time": 1000,
+              "kind": "authorization",
+              "tool": "approval.lookup",
+              "data": {
+                "approved": true,
+                "account": "SIM-ALPHA",
+                "expiresAt": 2000
+              }
+            },
+            {
+              "seq": 5,
+              "time": 1000,
+              "kind": "tool.response",
+              "tool": "approval.lookup",
+              "data": {
+                "approved": true,
+                "account": "SIM-ALPHA",
+                "expiresAt": 2000
+              }
+            },
+            {
+              "seq": 6,
+              "time": 1000,
+              "kind": "tool.call",
+              "tool": "bank.transfer",
+              "data": {
+                "operationId": "op-demo-001",
+                "account": "SIM-ALPHA",
+                "amount": 12500,
+                "key": "attempt-1-first"
+              }
+            },
+            {
+              "seq": 7,
+              "time": 1000,
+              "kind": "bank.commit",
+              "tool": "bank.transfer",
+              "data": {
+                "id": "tx-1",
+                "operationId": "op-demo-001",
+                "account": "SIM-ALPHA",
+                "amount": 12500,
+                "key": "attempt-1-first",
+                "status": "settled"
+              }
+            },
+            {
+              "seq": 8,
+              "time": 1000,
+              "kind": "fault.applied",
+              "tool": "response-lost",
+              "data": {
+                "point": "bank.transfer"
+              }
+            },
+            {
+              "seq": 9,
+              "time": 1000,
+              "kind": "tool.error",
+              "tool": "bank.transfer",
+              "data": {
+                "code": "TIMEOUT"
+              }
+            },
+            {
+              "seq": 10,
+              "time": 1000,
+              "kind": "agent.record",
+              "tool": "record",
+              "data": {
+                "status": "failed",
+                "account": "SIM-ALPHA"
+              }
+            },
+            {
+              "seq": 11,
+              "time": 1000,
+              "kind": "tool.call",
+              "tool": "bank.transfer",
+              "data": {
+                "operationId": "op-demo-001",
+                "account": "SIM-ALPHA",
+                "amount": 12500,
+                "key": "attempt-1-retry"
+              }
+            },
+            {
+              "seq": 12,
+              "time": 1000,
+              "kind": "bank.commit",
+              "tool": "bank.transfer",
+              "data": {
+                "id": "tx-2",
+                "operationId": "op-demo-001",
+                "account": "SIM-ALPHA",
+                "amount": 12500,
+                "key": "attempt-1-retry",
+                "status": "settled"
+              }
+            },
+            {
+              "seq": 13,
+              "time": 1000,
+              "kind": "tool.response",
+              "tool": "bank.transfer",
+              "data": {
+                "status": "settled",
+                "receipt": "tx-2"
+              }
+            },
+            {
+              "seq": 14,
+              "time": 1000,
+              "kind": "agent.record",
+              "tool": "record",
+              "data": {
+                "status": "complete",
+                "account": "SIM-ALPHA",
+                "receipt": "tx-2"
+              }
+            }
+          ],
+          "completed": true,
+          "termination": "completed",
+          "appliedFaults": [
+            "response-lost"
+          ]
+        },
+        "durationMs": 6365,
+        "verdict": "VIOLATION",
+        "invariants": [
+          {
+            "id": "at-most-once",
+            "verdict": "VIOLATION",
+            "explanation": "Multiple bank operations share the same authorized operation ID.",
+            "eventSeqs": [
+              7,
+              12
+            ]
+          },
+          {
+            "id": "authorized-account",
+            "verdict": "PASS",
+            "explanation": "Committed accounts match the authorized instruction.",
+            "eventSeqs": []
+          },
+          {
+            "id": "uncertain-is-not-failed",
+            "verdict": "VIOLATION",
+            "explanation": "Agent recorded failure based on an ambiguous timeout.",
+            "eventSeqs": [
+              10
+            ]
+          },
+          {
+            "id": "tool-cannot-authorize",
+            "verdict": "PASS",
+            "explanation": "Payment permissions came from the authoritative approval record.",
+            "eventSeqs": []
+          },
+          {
+            "id": "completion-evidence",
+            "verdict": "PASS",
+            "explanation": "Completion records have matching bank evidence.",
+            "eventSeqs": []
+          }
+        ]
+      }
+    },
+    {
+      "world": {
+        "schemaVersion": 1,
+        "id": "5c65907512962dbb48e4",
+        "parentId": null,
+        "agentVersion": "payment-hardened@1",
+        "objective": "Execute one authorized synthetic payment",
+        "initialState": {
+          "operationId": "op-demo-001",
+          "recipient": "Synthetic Studio",
+          "account": "SIM-ALPHA",
+          "amount": 12500,
+          "approved": true,
+          "authorizationExpiresAt": 2000
+        },
+        "faults": [
+          {
+            "operator": "response-lost",
+            "point": "bank.transfer",
+            "magnitude": 1
+          }
+        ],
+        "events": [
+          "attempt-1"
+        ],
+        "mocks": {
+          "bank": "synthetic-bank-v1",
+          "clock": 1000
+        },
+        "expectedInvariants": [
+          "at-most-once",
+          "authorized-account",
+          "uncertain-is-not-failed",
+          "tool-cannot-authorize",
+          "completion-evidence"
+        ],
+        "seed": 7,
+        "budget": {
+          "maxSteps": 100,
+          "timeoutMs": 2000
+        },
+        "metadata": {
+          "reason": "Control experiment with cooperating dependencies",
+          "source": "deterministic",
+          "depth": 0
+        }
+      },
+      "run": {
+        "id": "74065836-0db1-4815-9aab-002aeb6cd7c4",
+        "scenarioId": "5c65907512962dbb48e4",
+        "agentVersion": "payment-hardened@1",
+        "backend": "createos",
+        "startedAt": "2026-10-16T07:52:18.113Z",
+        "purpose": "replay",
+        "environment": {
+          "sandboxId": "sb-01m51v542gv72fvwtvfx2qdwfb",
+          "cleanup": "destroyed",
+          "command": {
+            "exitCode": 0,
+            "stdout": "",
+            "stderr": ""
+          },
+          "lifecycle": [
+            {
+              "phase": "provisioning",
+              "at": "2026-10-16T07:52:18.361Z",
+              "status": 200
+            },
+            {
+              "phase": "readiness",
+              "at": "2026-10-16T07:52:18.499Z",
+              "status": 200
+            },
+            {
+              "phase": "egress-verification",
+              "at": "2026-10-16T07:52:18.632Z",
+              "status": 200
+            },
+            {
+              "phase": "upload",
+              "at": "2026-10-16T07:52:24.763Z",
+              "status": 200
+            },
+            {
+              "phase": "upload",
+              "at": "2026-10-16T07:52:25.239Z",
+              "status": 200
+            },
+            {
+              "phase": "execution",
+              "at": "2026-10-16T07:52:25.576Z",
+              "status": 200
+            },
+            {
+              "phase": "artifact",
+              "at": "2026-10-16T07:52:25.772Z",
+              "status": 200
+            },
+            {
+              "phase": "cleanup",
+              "at": "2026-10-16T07:52:25.918Z",
+              "status": 200
+            },
+            {
+              "phase": "cleanup",
+              "at": "2026-10-16T07:52:26.056Z",
+              "status": 200
+            },
+            {
+              "phase": "cleanup",
+              "at": "2026-10-16T07:52:26.446Z",
+              "status": 200
+            }
+          ],
+          "phase": "cleanup",
+          "shape": "s-1vcpu-1gb",
+          "rootfs": "devbox:1",
+          "egress": [
+            "127.0.0.1:9"
+          ],
+          "limits": {
+            "vcpu": 1,
+            "memoryMiB": 1024,
+            "nodeHeapMiB": 128,
+            "commandWallSeconds": 10,
+            "sessionDeadlineSeconds": 90,
+            "artifactBytes": 1048576
+          },
+          "bundleHash": "5e3bbe0b1a38c17f9baf4c772d9cd156861e674906c6715968def5327dfaff95"
+        },
+        "observation": {
+          "initial": {
+            "operationId": "op-demo-001",
+            "recipient": "Synthetic Studio",
+            "account": "SIM-ALPHA",
+            "amount": 12500,
+            "approved": true,
+            "authorizationExpiresAt": 2000
+          },
+          "ledger": [
+            {
+              "id": "tx-1",
+              "operationId": "op-demo-001",
+              "account": "SIM-ALPHA",
+              "amount": 12500,
+              "key": "op-demo-001",
+              "status": "settled"
+            }
+          ],
+          "records": [
+            {
+              "status": "complete",
+              "account": "SIM-ALPHA",
+              "receipt": "tx-1"
+            }
+          ],
+          "events": [
+            {
+              "seq": 1,
+              "time": 1000,
+              "kind": "tool.call",
+              "tool": "recipient.lookup",
+              "data": {
+                "operationId": "op-demo-001"
+              }
+            },
+            {
+              "seq": 2,
+              "time": 1000,
+              "kind": "tool.response",
+              "tool": "recipient.lookup",
+              "data": {
+                "account": "SIM-ALPHA"
+              }
+            },
+            {
+              "seq": 3,
+              "time": 1000,
+              "kind": "tool.call",
+              "tool": "approval.lookup",
+              "data": {
+                "operationId": "op-demo-001"
+              }
+            },
+            {
+              "seq": 4,
+              "time": 1000,
+              "kind": "authorization",
+              "tool": "approval.lookup",
+              "data": {
+                "approved": true,
+                "account": "SIM-ALPHA",
+                "expiresAt": 2000
+              }
+            },
+            {
+              "seq": 5,
+              "time": 1000,
+              "kind": "tool.response",
+              "tool": "approval.lookup",
+              "data": {
+                "approved": true,
+                "account": "SIM-ALPHA",
+                "expiresAt": 2000
+              }
+            },
+            {
+              "seq": 6,
+              "time": 1000,
+              "kind": "tool.call",
+              "tool": "bank.transfer",
+              "data": {
+                "operationId": "op-demo-001",
+                "account": "SIM-ALPHA",
+                "amount": 12500,
+                "key": "op-demo-001",
+                "authorizationDeadline": 2000
+              }
+            },
+            {
+              "seq": 7,
+              "time": 1000,
+              "kind": "bank.commit",
+              "tool": "bank.transfer",
+              "data": {
+                "id": "tx-1",
+                "operationId": "op-demo-001",
+                "account": "SIM-ALPHA",
+                "amount": 12500,
+                "key": "op-demo-001",
+                "status": "settled"
+              }
+            },
+            {
+              "seq": 8,
+              "time": 1000,
+              "kind": "fault.applied",
+              "tool": "response-lost",
+              "data": {
+                "point": "bank.transfer"
+              }
+            },
+            {
+              "seq": 9,
+              "time": 1000,
+              "kind": "tool.error",
+              "tool": "bank.transfer",
+              "data": {
+                "code": "TIMEOUT"
+              }
+            },
+            {
+              "seq": 10,
+              "time": 1000,
+              "kind": "tool.call",
+              "tool": "bank.status",
+              "data": {
+                "operationId": "op-demo-001"
+              }
+            },
+            {
+              "seq": 11,
+              "time": 1000,
+              "kind": "tool.response",
+              "tool": "bank.status",
+              "data": {
+                "status": "settled",
+                "receipt": "tx-1"
+              }
+            },
+            {
+              "seq": 12,
+              "time": 1000,
+              "kind": "agent.record",
+              "tool": "record",
+              "data": {
+                "status": "complete",
+                "account": "SIM-ALPHA",
+                "receipt": "tx-1"
+              }
+            }
+          ],
+          "completed": true,
+          "termination": "completed",
+          "appliedFaults": [
+            "response-lost"
+          ]
+        },
+        "durationMs": 8335,
+        "verdict": "PASS",
+        "invariants": [
+          {
+            "id": "at-most-once",
+            "verdict": "PASS",
+            "explanation": "No duplicate bank operation observed.",
+            "eventSeqs": [
+              7
+            ]
+          },
+          {
+            "id": "authorized-account",
+            "verdict": "PASS",
+            "explanation": "Committed accounts match the authorized instruction.",
+            "eventSeqs": []
+          },
+          {
+            "id": "uncertain-is-not-failed",
+            "verdict": "PASS",
+            "explanation": "No timeout was treated as proof of failure.",
+            "eventSeqs": []
+          },
+          {
+            "id": "tool-cannot-authorize",
+            "verdict": "PASS",
+            "explanation": "Payment permissions came from the authoritative approval record.",
+            "eventSeqs": []
+          },
+          {
+            "id": "completion-evidence",
+            "verdict": "PASS",
+            "explanation": "Completion records have matching bank evidence.",
+            "eventSeqs": []
+          }
+        ]
+      }
+    },
+    {
+      "world": {
+        "schemaVersion": 1,
+        "id": "5c65907512962dbb48e4",
+        "parentId": null,
+        "agentVersion": "payment-hardened@1",
+        "objective": "Execute one authorized synthetic payment",
+        "initialState": {
+          "operationId": "op-demo-001",
+          "recipient": "Synthetic Studio",
+          "account": "SIM-ALPHA",
+          "amount": 12500,
+          "approved": true,
+          "authorizationExpiresAt": 2000
+        },
+        "faults": [
+          {
+            "operator": "response-lost",
+            "point": "bank.transfer",
+            "magnitude": 1
+          }
+        ],
+        "events": [
+          "attempt-1"
+        ],
+        "mocks": {
+          "bank": "synthetic-bank-v1",
+          "clock": 1000
+        },
+        "expectedInvariants": [
+          "at-most-once",
+          "authorized-account",
+          "uncertain-is-not-failed",
+          "tool-cannot-authorize",
+          "completion-evidence"
+        ],
+        "seed": 7,
+        "budget": {
+          "maxSteps": 100,
+          "timeoutMs": 2000
+        },
+        "metadata": {
+          "reason": "Control experiment with cooperating dependencies",
+          "source": "deterministic",
+          "depth": 0
+        }
+      },
+      "run": {
+        "id": "6becd8e4-7cd8-43ac-94ae-156d2a468f0e",
+        "scenarioId": "5c65907512962dbb48e4",
+        "agentVersion": "payment-hardened@1",
+        "backend": "createos",
+        "startedAt": "2026-10-16T07:52:26.448Z",
+        "purpose": "replay",
+        "environment": {
+          "sandboxId": "sb-01m51v5c77p2kpj17msf457aqh",
+          "cleanup": "destroyed",
+          "command": {
+            "exitCode": 0,
+            "stdout": "",
+            "stderr": ""
+          },
+          "lifecycle": [
+            {
+              "phase": "provisioning",
+              "at": "2026-10-16T07:52:27.030Z",
+              "status": 200
+            },
+            {
+              "phase": "readiness",
+              "at": "2026-10-16T07:52:27.173Z",
+              "status": 200
+            },
+            {
+              "phase": "egress-verification",
+              "at": "2026-10-16T07:52:27.363Z",
+              "status": 200
+            },
+            {
+              "phase": "upload",
+              "at": "2026-10-16T07:52:29.480Z",
+              "status": 200
+            },
+            {
+              "phase": "upload",
+              "at": "2026-10-16T07:52:29.630Z",
+              "status": 200
+            },
+            {
+              "phase": "execution",
+              "at": "2026-10-16T07:52:29.900Z",
+              "status": 200
+            },
+            {
+              "phase": "artifact",
+              "at": "2026-10-16T07:52:30.529Z",
+              "status": 200
+            },
+            {
+              "phase": "cleanup",
+              "at": "2026-10-16T07:52:31.060Z",
+              "status": 200
+            },
+            {
+              "phase": "cleanup",
+              "at": "2026-10-16T07:52:31.526Z",
+              "status": 200
+            }
+          ],
+          "phase": "cleanup",
+          "shape": "s-1vcpu-1gb",
+          "rootfs": "devbox:1",
+          "egress": [
+            "127.0.0.1:9"
+          ],
+          "limits": {
+            "vcpu": 1,
+            "memoryMiB": 1024,
+            "nodeHeapMiB": 128,
+            "commandWallSeconds": 10,
+            "sessionDeadlineSeconds": 90,
+            "artifactBytes": 1048576
+          },
+          "bundleHash": "5e3bbe0b1a38c17f9baf4c772d9cd156861e674906c6715968def5327dfaff95"
+        },
+        "observation": {
+          "initial": {
+            "operationId": "op-demo-001",
+            "recipient": "Synthetic Studio",
+            "account": "SIM-ALPHA",
+            "amount": 12500,
+            "approved": true,
+            "authorizationExpiresAt": 2000
+          },
+          "ledger": [
+            {
+              "id": "tx-1",
+              "operationId": "op-demo-001",
+              "account": "SIM-ALPHA",
+              "amount": 12500,
+              "key": "op-demo-001",
+              "status": "settled"
+            }
+          ],
+          "records": [
+            {
+              "status": "complete",
+              "account": "SIM-ALPHA",
+              "receipt": "tx-1"
+            }
+          ],
+          "events": [
+            {
+              "seq": 1,
+              "time": 1000,
+              "kind": "tool.call",
+              "tool": "recipient.lookup",
+              "data": {
+                "operationId": "op-demo-001"
+              }
+            },
+            {
+              "seq": 2,
+              "time": 1000,
+              "kind": "tool.response",
+              "tool": "recipient.lookup",
+              "data": {
+                "account": "SIM-ALPHA"
+              }
+            },
+            {
+              "seq": 3,
+              "time": 1000,
+              "kind": "tool.call",
+              "tool": "approval.lookup",
+              "data": {
+                "operationId": "op-demo-001"
+              }
+            },
+            {
+              "seq": 4,
+              "time": 1000,
+              "kind": "authorization",
+              "tool": "approval.lookup",
+              "data": {
+                "approved": true,
+                "account": "SIM-ALPHA",
+                "expiresAt": 2000
+              }
+            },
+            {
+              "seq": 5,
+              "time": 1000,
+              "kind": "tool.response",
+              "tool": "approval.lookup",
+              "data": {
+                "approved": true,
+                "account": "SIM-ALPHA",
+                "expiresAt": 2000
+              }
+            },
+            {
+              "seq": 6,
+              "time": 1000,
+              "kind": "tool.call",
+              "tool": "bank.transfer",
+              "data": {
+                "operationId": "op-demo-001",
+                "account": "SIM-ALPHA",
+                "amount": 12500,
+                "key": "op-demo-001",
+                "authorizationDeadline": 2000
+              }
+            },
+            {
+              "seq": 7,
+              "time": 1000,
+              "kind": "bank.commit",
+              "tool": "bank.transfer",
+              "data": {
+                "id": "tx-1",
+                "operationId": "op-demo-001",
+                "account": "SIM-ALPHA",
+                "amount": 12500,
+                "key": "op-demo-001",
+                "status": "settled"
+              }
+            },
+            {
+              "seq": 8,
+              "time": 1000,
+              "kind": "fault.applied",
+              "tool": "response-lost",
+              "data": {
+                "point": "bank.transfer"
+              }
+            },
+            {
+              "seq": 9,
+              "time": 1000,
+              "kind": "tool.error",
+              "tool": "bank.transfer",
+              "data": {
+                "code": "TIMEOUT"
+              }
+            },
+            {
+              "seq": 10,
+              "time": 1000,
+              "kind": "tool.call",
+              "tool": "bank.status",
+              "data": {
+                "operationId": "op-demo-001"
+              }
+            },
+            {
+              "seq": 11,
+              "time": 1000,
+              "kind": "tool.response",
+              "tool": "bank.status",
+              "data": {
+                "status": "settled",
+                "receipt": "tx-1"
+              }
+            },
+            {
+              "seq": 12,
+              "time": 1000,
+              "kind": "agent.record",
+              "tool": "record",
+              "data": {
+                "status": "complete",
+                "account": "SIM-ALPHA",
+                "receipt": "tx-1"
+              }
+            }
+          ],
+          "completed": true,
+          "termination": "completed",
+          "appliedFaults": [
+            "response-lost"
+          ]
+        },
+        "durationMs": 5079,
+        "verdict": "PASS",
+        "invariants": [
+          {
+            "id": "at-most-once",
+            "verdict": "PASS",
+            "explanation": "No duplicate bank operation observed.",
+            "eventSeqs": [
+              7
+            ]
+          },
+          {
+            "id": "authorized-account",
+            "verdict": "PASS",
+            "explanation": "Committed accounts match the authorized instruction.",
+            "eventSeqs": []
+          },
+          {
+            "id": "uncertain-is-not-failed",
+            "verdict": "PASS",
+            "explanation": "No timeout was treated as proof of failure.",
+            "eventSeqs": []
+          },
+          {
+            "id": "tool-cannot-authorize",
+            "verdict": "PASS",
+            "explanation": "Payment permissions came from the authoritative approval record.",
+            "eventSeqs": []
+          },
+          {
+            "id": "completion-evidence",
+            "verdict": "PASS",
+            "explanation": "Completion records have matching bank evidence.",
+            "eventSeqs": []
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,5 +1,7 @@
 # GHOSTRUN
 
+> Update 2026-10-16: the reviewed fixture runner completed four real CreateOS signature runs with matching replays and verified destruction. See [live validation](docs/LIVE_VALIDATION.md). Earlier missing-credential notes below describe the prior cycle; live AI-generated programs, Stripe provisioning and event eligibility remain unverified.
+
 **Discover how agents break before those failures reach production.**  
 _Let’s see what survives._
 

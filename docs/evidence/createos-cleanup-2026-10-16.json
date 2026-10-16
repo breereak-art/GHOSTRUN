@@ -1,0 +1,58 @@
+{
+  "checkedAt": "2026-10-16T07:58:00.756Z",
+  "reportSHA256": "e5c761d038e23063a5b6a5671a23bba9e50fcc3eb9c76009903ca4b08f3385a5",
+  "statuses": [
+    {
+      "sandboxId": "sb-01m51v4svzmwkmf5rg6qw5pyv2",
+      "status": "destroyed",
+      "createdAt": "2026-10-16T07:52:07.807593Z",
+      "runningAt": "2026-10-16T07:52:07.872929Z",
+      "destroyedAt": "2026-10-16T07:52:11.467385Z",
+      "shape": "s-1vcpu-1gb",
+      "rootfs": "devbox:1",
+      "ingressEnabled": false,
+      "egress": [
+        "127.0.0.1:9"
+      ]
+    },
+    {
+      "sandboxId": "sb-01m51v4y07gzaqx26nwk6xjz6d",
+      "status": "destroyed",
+      "createdAt": "2026-10-16T07:52:12.039222Z",
+      "runningAt": "2026-10-16T07:52:12.08455Z",
+      "destroyedAt": "2026-10-16T07:52:17.693135Z",
+      "shape": "s-1vcpu-1gb",
+      "rootfs": "devbox:1",
+      "ingressEnabled": false,
+      "egress": [
+        "127.0.0.1:9"
+      ]
+    },
+    {
+      "sandboxId": "sb-01m51v542gv72fvwtvfx2qdwfb",
+      "status": "destroyed",
+      "createdAt": "2026-10-16T07:52:18.256834Z",
+      "runningAt": "2026-10-16T07:52:18.317896Z",
+      "destroyedAt": "2026-10-16T07:52:26.153497Z",
+      "shape": "s-1vcpu-1gb",
+      "rootfs": "devbox:1",
+      "ingressEnabled": false,
+      "egress": [
+        "127.0.0.1:9"
+      ]
+    },
+    {
+      "sandboxId": "sb-01m51v5c77p2kpj17msf457aqh",
+      "status": "destroyed",
+      "createdAt": "2026-10-16T07:52:26.599074Z",
+      "runningAt": "2026-10-16T07:52:26.636681Z",
+      "destroyedAt": "2026-10-16T07:52:31.203913Z",
+      "shape": "s-1vcpu-1gb",
+      "rootfs": "devbox:1",
+      "ingressEnabled": false,
+      "egress": [
+        "127.0.0.1:9"
+      ]
+    }
+  ]
+}

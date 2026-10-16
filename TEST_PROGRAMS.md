@@ -1,5 +1,7 @@
 # Sandbox-only generated test programs
 
+> Update 2026-10-16: the reviewed fixture runner completed four real CreateOS signature runs with matching replays and verified destruction. See [live validation](docs/LIVE_VALIDATION.md). Earlier missing-credential notes below describe the prior cycle; live AI-generated programs, Stripe provisioning and event eligibility remain unverified.
+
 The optional planner now writes JavaScript in a closed language, `ghost-js-v1`.
 This is a constrained test-program generator, not a general autonomous coding agent.
 Whether this meets the event requirement remains an organizer decision.
