@@ -1,5 +1,7 @@
 # GHOSTRUN implementation progress
 
+> R&D update 2026-10-17: NVIDIA Nemotron generated a validated ghost-js-v1 program that executed in CreateOS with independent invariant checks and confirmed cleanup. See [NVIDIA validation](docs/NVIDIA_VALIDATION.md). Earlier missing-planner notes below are historical.
+
 > Update 2026-10-16: the reviewed fixture runner completed four real CreateOS signature runs with matching replays and verified destruction. See [live validation](docs/LIVE_VALIDATION.md). Earlier missing-credential notes below describe the prior cycle; live AI-generated programs, Stripe provisioning and event eligibility remain unverified.
 
 ## Current local build
